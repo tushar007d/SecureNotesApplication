@@ -20,16 +20,16 @@ public class SecurityConfig {
                 (requests) ->
                         requests.requestMatchers("/contact").permitAll()
                                 .anyRequest().authenticated()
-                                .requestMatchers("/admin").denyAll() //this denyAll is used in-case the admin functionality is under maintainance.
+                               // .requestMatchers("/admin").denyAll() //this denyAll is used in-case the admin functionality is under maintainance.
         );
-
+        httpSecurity.csrf(csrf -> csrf.disable());
         httpSecurity.httpBasic(Customizer.withDefaults()); //this is for basic authentication
 
         //below sessionManagement functionality is used to make session stateless,
         //which will not store session details
-        httpSecurity.sessionManagement(
-                (session) ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        httpSecurity.sessionManagement(
+//                (session) ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return httpSecurity.build();
     }
